@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHATTER ME | AFTER THE FALL</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
+
+:root{
+ --black:#09090d;
+ --dark:#100d18;
+ --purple:#9a5bdf;
+ --violet:#6329a3;
+ --green:#76d66a;
+ --emerald:#164e35;
+ --white:#f3edf9;
+ --muted:#a59aaf;
+ --glass:rgba(25,19,37,.78);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+ background:var(--black);
+ color:var(--white);
+ font-family:'Vazirmatn',Tahoma,sans-serif;
+ overflow-x:hidden;
+}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer}
+img{max-width:100%}
+
+/* BACKGROUND */
+body::before{
+ content:"";
+ position:fixed;
+ inset:-30%;
+ z-index:-3;
+ background:
+ radial-gradient(ellipse at 20% 30%,#56278d66,transparent 35%),
+ radial-gradient(ellipse at 80% 65%,#176d4380,transparent 35%),
+ radial-gradient(ellipse at 50% 50%,#32174644,transparent 55%);
+ animation:ambient 12s ease-in-out infinite alternate;
+}
+@keyframes ambient{
+ 0%{transform:translate(-3%,-2%) scale(1)}
+ 100%{transform:translate(4%,3%) scale(1.12)}
+}
+.noise{
+ position:fixed;inset:0;z-index:-1;pointer-events:none;
+ opacity:.12;
+ background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.2'/%3E%3C/svg%3E");
+}
+.glow{
+ position:fixed;width:400px;height:400px;
+ border-radius:50%;pointer-events:none;z-index:-2;
+ filter:blur(100px);opacity:.12;
+}
+.glow.one{background:#a34aff;top:10%;right:-200px}
+.glow.two{background:#35bd71;bottom:0;left:-200px}
+
+/* CURSOR */
+#cursor{
+ width:12px;height:12px;
+ position:fixed;z-index:99999;
+ pointer-events:none;border-radius:50%;
+ background:#a5f47d;
+ box-shadow:0 0 12px #7ce76d,0 0 28px #7ce76d;
+ transform:translate(-50%,-50%);
+}
+#cursorHalo{
+ width:45px;height:45px;
+ border:1px solid #a76ce8;
+ position:fixed;z-index:99998;
+ pointer-events:none;border-radius:50%;
+ transform:translate(-50%,-50%);
+ box-shadow:0 0 20px #a76ce855;
+}
+.trail{
+ position:fixed;width:5px;height:5px;
+ border-radius:50%;pointer-events:none;
+ z-index:99997;background:#a56be4;
+ box-shadow:0 0 12px #a56be4;
+}
+@media(pointer:coarse){
+ #cursor,#cursorHalo,.trail{display:none}
+}
+
+/* INTRO */
+#intro{
+ position:fixed;inset:0;z-index:1000;
+ background:#07060c;
+ display:flex;align-items:center;justify-content:center;
+ overflow:hidden;
+ transition:opacity 1.3s,visibility 1.3s;
+}
+#intro.hide{
+ opacity:0;visibility:hidden;pointer-events:none;
+}
+.intro-bg{
+ position:absolute;inset:0;
+ background:
+ linear-gradient(90deg,#08070c 0%,#08070c33 48%,#08070c 100%),
+ linear-gradient(0deg,#08070c 0%,transparent 50%,#08070c 100%),
+ url("LINK_INTRO_BACKGROUND");
+ background-size:cover;background-position:center;
+ filter:brightness(.55);
+ transform:scale(1.04);
+ animation:zoom 18s infinite alternate;
+}
+@keyframes zoom{to{transform:scale(1.14)}}
+
+.intro-light{
+ position:absolute;width:500px;height:500px;
+ border-radius:50%;filter:blur(120px);
+ opacity:.28;animation:float 8s infinite alternate;
+}
+.intro-light.p{background:#9037e9;left:-150px;top:0}
+.intro-light.g{background:#1aab62;right:-180px;bottom:-100px}
+@keyframes float{to{transform:translate(80px,-50px)}}
+
+.intro-art{
+ position:absolute;inset:0;
+ display:flex;justify-content:center;align-items:end;
+ pointer-events:none;
+}
+.intro-art img{
+ position:absolute;
+ height:min(85vh,800px);
+ width:45%;
+ object-fit:contain;
+ object-position:bottom;
+ filter:drop-shadow(0 0 35px #a15be455);
+}
+.intro-art .juliette{right:3%;z-index:2}
+.intro-art .warner{left:3%;z-index:1}
+
+.intro-overlay{
+ position:absolute;inset:0;
+ background:linear-gradient(90deg,#08070c 0%,transparent 35%,transparent 65%,#08070c 100%);
+}
+.intro-content{
+ position:relative;z-index:5;
+ text-align:center;
+ width:100%;padding:25px;
+}
+.intro-top{
+ color:#9bdc8a;
+ font-size:11px;letter-spacing:7px;
+ font-family:Georgia,serif;
+}
+.intro-content h1{
+ font-family:'Cinzel',Georgia,serif;
+ font-size:clamp(55px,11vw,135px);
+ line-height:1.1;
+ letter-spacing:7px;
+ margin:25px 0;
+ text-shadow:0 0 30px #9a5bdf66;
+}
+.intro-content h1 span{
+ color:#a76ce8;
+}
+.intro-sub{
+ font-size:15px;letter-spacing:5px;
+ color:#bcb1c9;margin-bottom:20px;
+}
+.intro-line{
+ width:90px;height:1px;
+ background:linear-gradient(90deg,transparent,#a8e58c,transparent);
+ margin:25px auto;
+}
+.intro-desc{
+ font-size:12px;line-height:2.5;
+ color:#c3b8cb;
+}
+.enter{
+ position:relative;
+ display:inline-flex;align-items:center;gap:15px;
+ border:1px solid #9e6ed0;
+ color:white;padding:17px 42px;
+ margin-top:35px;
+ background:#26183388;
+ letter-spacing:4px;font-family:'Cinzel',serif;
+ transition:.4s;
+}
+.enter:before{
+ content:"";position:absolute;inset:0;
+ background:linear-gradient(100deg,#8138c9,#246b42);
+ opacity:0;transition:.4s;z-index:-1;
+}
+.enter:hover{box-shadow:0 0 35px #a35ce766}
+.enter:hover:before{opacity:1}
+.intro-bottom{
+ position:absolute;bottom:25px;
+ width:100%;text-align:center;
+ color:#80738b;font-size:10px;letter-spacing:4px;
+}
+
+/* MAIN */
+#site{opacity:0;visibility:hidden;transition:opacity 1.2s}
+#site.show{opacity:1;visibility:visible}
+.container{width:90%;max-width:1250px;margin:auto}
+section{padding:105px 0;position:relative}
+.eyebrow{
+ color:var(--green);font-size:10px;
+ letter-spacing:5px;font-family:'Cinzel',serif;
+}
+.section-heading{text-align:center;margin-bottom:55px}
+.section-heading h2{
+ font-size:34px;margin:15px 0;
+ font-weight:600;color:#f4eafa;
+}
+.section-heading p{font-size:12px;color:var(--muted);line-height:2}
+.under-line{
+ width:75px;height:2px;margin:22px auto;
+ background:linear-gradient(90deg,var(--green),var(--purple));
+ box-shadow:0 0 12px var(--purple);
+}
+
+/* NAV */
+.navbar{
+ position:sticky;top:0;z-index:100;
+ background:#0a0910d9;
+ backdrop-filter:blur(18px);
+ border-bottom:1px solid #a36ce833;
+}
+.nav-inner{
+ min-height:75px;
+ display:flex;align-items:center;
+ justify-content:space-between;gap:20px;
+}
+.logo{
+ font-family:'Cinzel',serif;
+ font-size:22px;letter-spacing:4px;
+ color:#b98ce9;
+ text-shadow:0 0 20px #9847d966;
+}
+.nav-links{display:flex;gap:22px;flex-wrap:wrap}
+.nav-links a{
+ color:#b7adbf;font-size:11px;
+ transition:.3s;
+}
+.nav-links a:hover{color:#9ee57f;text-shadow:0 0 15px #7cda6c}
+
+/* HERO */
+.hero{
+ min-height:680px;display:flex;align-items:center;
+ position:relative;overflow:hidden;
+ background:
+ linear-gradient(90deg,#09080e 5%,#09080e99 45%,#09080e22 100%),
+ linear-gradient(0deg,#09080e,transparent 40%),
+ url("LINK_HERO_BACKGROUND") center/cover no-repeat;
+}
+.hero:after{
+ content:"";position:absolute;
+ right:0;top:10%;height:80%;width:2px;
+ background:linear-gradient(transparent,#a76ce8,#7ce77d,transparent);
+ box-shadow:0 0 20px #9c59d5;
+}
+.hero-content{position:relative;z-index:2;max-width:650px}
+.hero-content h2{
+ font-family:'Cinzel',serif;
+ font-size:clamp(65px,10vw,110px);
+ letter-spacing:5px;line-height:1;
+ margin:25px 0;
+}
+.hero-content h2 span{color:#9d6cdb}
+.hero-content p{
+ color:#b9aebf;line-height:2.8;
+ font-size:13px;max-width:500px;
+}
+.hero-buttons{display:flex;gap:15px;flex-wrap:wrap;margin-top:30px}
+.btn{
+ padding:14px 26px;
+ display:inline-block;
+ font-size:11px;letter-spacing:2px;
+ border:1px solid #9366bd;
+ transition:.3s;
+}
+.btn.primary{background:#7441a6;color:white}
+.btn:hover{background:#2b7547;border-color:#9ce17e;box-shadow:0 0 25px #7ad66c44}
+
+/* STAT BAR */
+.stats{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ background:#171020;
+ border-top:1px solid #9a6acb33;
+ border-bottom:1px solid #9a6acb33;
+}
+.stat{text-align:center;padding:28px 10px}
+.stat strong{
+ display:block;font-family:'Cinzel',serif;
+ font-size:25px;color:#a77be0;
+}
+.stat span{font-size:10px;color:#a99eb3}
+
+/* STORY */
+.story-grid{
+ display:grid;grid-template-columns:1fr 1.2fr;
+ gap:55px;align-items:center;
+}
+.story-img{
+ min-height:480px;
+ background:
+ linear-gradient(0deg,#100d18 0%,transparent 55%),
+ url("LINK_STORY_IMAGE") center/cover;
+ border:1px solid #9c69c8;
+ box-shadow:15px 15px 0 #26603a55,0 0 45px #8548b933;
+}
+.story-text h3{font-size:28px;color:#b58be7;margin:20px 0}
+.story-text p{color:#b4a9bd;font-size:13px;line-height:2.8;margin:15px 0}
+.quote{
+ padding:22px;margin-top:25px;
+ border-right:3px solid var(--green);
+ background:#1a1423;
+ color:#c3add9;line-height:2.4;
+}
+
+/* CHARACTERS */
+#characters{
+ background:linear-gradient(180deg,#100d18,#0b1510,#100d18);
+}
+.character-grid{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:25px;
+}
+.character{
+ position:relative;overflow:hidden;
+ background:#15101d;
+ border:1px solid #8657ae66;
+ transition:.45s;
+}
+.character:hover{
+ transform:translateY(-10px);
+ border-color:#a5df83;
+ box-shadow:0 15px 40px #5d318d44;
+}
+.character img{
+ width:100%;height:390px;
+ object-fit:cover;display:block;
+ filter:grayscale(25%) brightness(.78);
+ transition:.6s;
+}
+.character:hover img{filter:grayscale(0) brightness(1.05);transform:scale(1.04)}
+.character-info{padding:23px}
+.character-info small{
+ font-family:'Cinzel',serif;
+ color:#90d97b;font-size:9px;letter-spacing:3px;
+}
+.character-info h3{font-size:21px;margin:12px 0;color:#e4d4f4}
+.character-info p{font-size:12px;line-height:2.3;color:#a99eb2}
+
+/* VIDEO */
+.video-grid{
+ display:grid;grid-template-columns:1fr 1fr;gap:25px;
+}
+.video-card{
+ background:#15101d;padding:15px;
+ border:1px solid #6f458d;
+}
+.video-card h3{font-size:15px;color:#a77ce1;margin:10px 0 17px}
+.video-card video{
+ width:100%;display:block;background:#08070b;
+ border:1px solid #453253;
+}
+.video-card p{font-size:11px;color:#a99eb2;padding:12px 0}
+
+/* BOOKS */
+#books{background:linear-gradient(180deg,#0e0b15,#152019,#0e0b15)}
+.book-carousel{
+ display:flex;gap:35px;overflow-x:auto;
+ padding:25px 10px 40px;
+ scroll-snap-type:x mandatory;
+}
+.book-carousel::-webkit-scrollbar{height:5px}
+.book-carousel::-webkit-scrollbar-thumb{background:#8052b9}
+.book{
+ flex:0 0 190px;text-align:center;
+ scroll-snap-align:center;
+ transition:.4s;
+}
+.book:hover{transform:translateY(-12px)}
+.book-cover{
+ width:180px;height:180px;
+ border-radius:50%;overflow:hidden;
+ border:2px solid #a77be0;
+ padding:7px;
+ box-shadow:0 0 0 7px #a77be022,0 0 30px #8d50c655;
+}
+.book-cover img{
+ width:100%;height:100%;object-fit:cover;
+ border-radius:50%;
+}
+.book h3{font-family:'Cinzel',serif;font-size:14px;margin:18px 0 7px;color:#c6a1ee}
+.book p{font-size:11px;color:#a99eb2}
+
+/* AUTHOR */
+.author-grid{
+ display:grid;grid-template-columns:.8fr 1.2fr;
+ gap:50px;align-items:center;
+}
+.author-img{
+ width:100%;height:450px;object-fit:cover;
+ border:1px solid #8658b4;
+ box-shadow:15px 15px 0 #225a3c55;
+}
+.author-text h3{font-size:30px;color:#b68ce7;margin:15px 0}
+.author-text p{font-size:13px;color:#b4a9bd;line-height:2.8}
+.author-quote{
+ margin-top:25px;padding:20px;
+ border-right:3px solid var(--green);
+ background:#1b1425;
+ color:#d0b8e6;
+}
+
+/* PLAYLIST */
+.music-area{
+ text-align:center;
+ background:
+ radial-gradient(ellipse at 20% 50%,#5e288d55,transparent 40%),
+ radial-gradient(ellipse at 80% 50%,#16633d55,transparent 40%);
+}
+.playlist-open{
+ background:linear-gradient(110deg,#7136a6,#256b42);
+ color:white;border:0;
+ padding:19px 35px;
+ font-size:12px;letter-spacing:3px;
+ box-shadow:0 0 30px #8950c944;
+ transition:.3s;
+}
+.playlist-open:hover{transform:scale(1.04);box-shadow:0 0 40px #7ce77d55}
+.playlist{
+ display:none;max-width:750px;
+ margin:35px auto 0;text-align:right;
+ background:#15101e;
+ border:1px solid #8556ae;
+ padding:25px;
+}
+.playlist.open{display:block;animation:appear .4s}
+@keyframes appear{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.playlist-head{
+ display:flex;justify-content:space-between;
+ border-bottom:1px solid #60477a;
+ padding-bottom:18px;margin-bottom:15px;
+}
+.playlist-head h3{color:#b78ce5;font-family:'Cinzel',serif}
+.close-playlist{color:#9de17d;background:none;border:0}
+.track{
+ display:grid;grid-template-columns:45px 1fr;
+ gap:15px;padding:18px 0;
+ border-bottom:1px solid #30243c;
+}
+.track-num{
+ width:38px;height:38px;border-radius:50%;
+ background:#342044;color:#b78ce5;
+ display:grid;place-items:center;
+}
+.track h4{font-size:13px;color:#eee0f7;margin-bottom:10px}
+.track p{font-size:10px;color:#a59aaa;margin-bottom:10px}
+.track audio{width:100%;max-width:450px;height:35px}
+
+/* REGISTER */
+.register-box{
+ max-width:520px;margin:auto;
+ padding:35px;background:#17111f;
+ border:1px solid #8355ac;
+ box-shadow:0 0 50px #713ca333;
+}
+.register-box input{
+ display:block;width:100%;padding:15px;
+ margin:13px 0;background:#0b0910;
+ border:1px solid #59406e;
+ color:white;outline:none;font-family:inherit;
+}
+.register-box input:focus{border-color:#8bd979}
+.register-box button{
+ width:100%;padding:15px;
+ background:linear-gradient(90deg,#7543a9,#256a42);
+ color:white;border:0;font-size:12px;
+}
+.register-box p{font-size:11px;color:#a69aae;line-height:2;margin-bottom:15px}
+
+/* BLOG */
+.blog-post{
+ padding:25px;margin-bottom:25px;
+ background:#17111f;border:1px solid #65427d;
+}
+.blog-post h3{color:#b68be4}
+.blog-post p{color:#b4a9bd;line-height:2.5;font-size:13px}
+
+/* FOOTER */
+footer{
+ background:#08070c;
+ border-top:1px solid #74469a;
+ text-align:center;padding:60px 15px;
+}
+.footer-logo{
+ font-family:'Cinzel',serif;
+ color:#b98ce8;letter-spacing:7px;font-size:26px;
+}
+footer p{font-size:11px;color:#887c93;margin-top:15px}
+.backtop{
+ display:inline-block;border:1px solid #7b54a0;
+ padding:12px 25px;margin-top:25px;
+ color:#bca0d8;font-size:11px;
+}
+
+/* RESPONSIVE */
+@media(max-width:850px){
+ .intro-art img{width:65%;opacity:.65}
+ .intro-overlay{background:#08070c88}
+ .story-grid,.author-grid{grid-template-columns:1fr}
+ .story-img{min-height:350px}
+ .character-grid{grid-template-columns:repeat(2,1fr)}
+ .nav-inner{padding:15px 0;flex-direction:column}
+ .hero{min-height:580px}
+}
+@media(max-width:550px){
+ section{padding:75px 0}
+ .container{width:91%}
+ .intro-content h1{font-size:57px;letter-spacing:2px}
+ .intro-sub{font-size:11px;letter-spacing:2px}
+ .intro-art img{width:85%;height:70%;opacity:.42}
+ .nav-links{justify-content:center;gap:13px}
+ .nav-links a{font-size:10px}
+ .character-grid,.video-grid{grid-template-columns:1fr}
+ .character img{height:350px}
+ .section-heading h2{font-size:26px}
+ .stats{grid-template-columns:1fr 1fr 1fr}
+ .stat strong{font-size:19px}
+ .stat span{font-size:9px}
+ .track{grid-template-columns:35px 1fr}
+ .book{flex-basis:155px}
+ .book-cover{width:150px;height:150px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="noise"></div>
+<div class="glow one"></div>
+<div class="glow two"></div>
+<div id="cursor"></div>
+<div id="cursorHalo"></div>
+
+<!-- ==================================
+     PAGE 1 : INTRO
+     ================================== -->
+
+<div id="intro">
+
+ <div class="intro-bg"></div>
+ <div class="intro-light p"></div>
+ <div class="intro-light g"></div>
+
+ <div class="intro-art">
+
+  <!-- عکس جولیت: لینک مستقیم PNG یا WEBP -->
+  <img class="juliette"
+       src="image/b.jpg"
+       alt="Juliette Ferrars">
+
+  <!-- عکس آرون وارنر: لینک مستقیم PNG یا WEBP -->
+  <img class="warner"
+       src="image/a.jpg"
+       alt="Aaron Warner">
+
+ </div>
+
+ <div class="intro-overlay"></div>
+
+ <div class="intro-content">
+
+  <div class="intro-top">WELCOME TO THE REESTABLISHMENT</div>
+
+  <h1>SHATTER<br><span>ME</span></h1>
+
+  <div class="intro-sub">THE WORLD IS NOT WHAT IT SEEMS</div>
+
+  <div class="intro-line"></div>
+
+  <p class="intro-desc">
+   در جهانی که قدرت، قانون را می‌نویسد...
+   <br>
+   آیا می‌توانی سرنوشت خودت را تغییر بدهی؟
+  </p>
+
+  <button class="enter" onclick="enterWorld()">
+   ENTER THE WORLD <span>↗</span>
+  </button>
+
+  <!-- موسیقی ملایم Intro -->
+  <div style="margin-top:22px">
+   <audio controls style="width:210px;height:32px">
+    <source src="music/1.mp3" type="audio/mpeg">
+   </audio>
+  </div>
+
+ </div>
+
+ <div class="intro-bottom">
+  AFTER THE FALL • SHATTER ME ARCHIVE
+ </div>
+
+</div>
+
+
+<!-- ==================================
+     PAGE 2 : MAIN WEBSITE
+     ================================== -->
+
+<div id="site">
+
+<header class="navbar">
+ <div class="container nav-inner">
+
+  <a class="logo" href="#home">SHATTER ME.</a>
+
+  <nav class="nav-links">
+   <a href="#home">خانه</a>
+   <a href="#story">داستان</a>
+   <a href="#characters">شخصیت‌ها</a>
+   <a href="#videos">فیلم‌ها</a>
+   <a href="#books">کتاب‌ها</a>
+   <a href="#author">نویسنده</a>
+   <a href="#music">موسیقی</a>
+   <a href="#register">عضویت</a>
+  </nav>
+
+ </div>
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+ <div class="container hero-content">
+
+  <div class="eyebrow">A WORLD OF POWER AND CHAOS</div>
+
+  <h2>SHATTER<br><span>ME.</span></h2>
+
+  <p>
+   او دختری بود که هیچ‌کس نمی‌توانست لمسش کند.
+   او مردی بود که هیچ‌کس جرئت مخالفت با او را نداشت.
+   در میان جنگ، قدرت و رازهای پنهان،
+   داستانی آغاز شد که هیچ‌چیز را مثل قبل باقی نگذاشت.
+  </p>
+
+  <div class="hero-buttons">
+   <a class="btn primary" href="#story">DISCOVER THE STORY</a>
+   <a class="btn" href="#characters">MEET THE CHARACTERS</a>
+  </div>
+
+ </div>
+</section>
+
+
+<div class="stats">
+ <div class="stat"><strong>07</strong><span>MAIN BOOKS</span></div>
+ <div class="stat"><strong>01</strong><span>UNFORGETTABLE WORLD</span></div>
+ <div class="stat"><strong>∞</strong><span>SECRETS</span></div>
+</div>
+
+
+<!-- STORY -->
+
+<section id="story">
+ <div class="container">
+
+  <div class="section-heading">
+   <div class="eyebrow">THE BEGINNING</div>
+   <h2>داستان یک قدرت ممنوعه</h2>
+   <div class="under-line"></div>
+   <p>هر انقلابی از یک نفر شروع می‌شود.</p>
+  </div>
+
+  <div class="story-grid">
+
+   <div class="story-img"></div>
+
+   <div class="story-text">
+    <div class="eyebrow">JULIETTE FERRARS</div>
+
+    <h3>دختری که لمسش مرگ است...</h3>
+
+    <p>
+     در آینده‌ای ویران‌شده، جهانی تحت سلطه حکومتی
+     به نام بازسازی قرار دارد. منابع رو به پایان‌اند،
+     مردم در شرایط دشواری زندگی می‌کنند و قدرت
+     در دست گروه کوچکی متمرکز شده است.
+    </p>
+
+    <p>
+     جولیت فرارس دختری با قدرتی غیرمعمول است.
+     لمس او می‌تواند برای دیگران خطرناک باشد و
+     همین ویژگی باعث شده سال‌ها از جامعه دور بماند.
+    </p>
+
+    <p>
+     ورود دوباره آدم‌هایی از گذشته، او را به مرکز
+     اتفاقاتی می‌کشاند که سرنوشتش را تغییر می‌دهند.
+     جولیت به‌تدریج قدرت خودش را می‌شناسد و
+     می‌فهمد که ترس دیگران نباید هویت او را تعریف کند.
+    </p>
+
+    <p>
+     در مسیر این تغییر، با آرون وارنر، کنجی،
+     آدام و حقیقت‌های پنهان حکومت بازسازی روبه‌رو می‌شود.
+     داستانی درباره آزادی، اعتماد، انتخاب و قدرت آغاز می‌شود.
+    </p>
+
+    <div class="quote">
+     THE POWER WAS NEVER THE PROBLEM.
+     THE WORLD WAS.
+    </div>
+
+   </div>
+  </div>
+ </div>
+</section>
+
+
+<!-- CHARACTERS -->
+
+<section id="characters">
+
+ <div class="container">
+
+  <div class="section-heading">
+   <div class="eyebrow">CHARACTER ARCHIVE</div>
+   <h2>پرونده شخصیت‌ها</h2>
+   <div class="under-line"></div>
+   <p>افرادی که مسیر این دنیا را تغییر دادند.</p>
+  </div>
+
+  <div class="character-grid">
+
+   <article class="character">
+    <img src="image/j.jpg" alt="Juliette">
+    <div class="character-info">
+     <small>THE GIRL WITH THE DEADLY TOUCH</small>
+     <h3>جولیت فرارس</h3>
+     <p>دختری با قدرتی غیرعادی که باید یاد بگیرد از خودش نترسد و سرنوشتش را خودش بسازد.</p>
+    </div>
+   </article>
+
+   <article class="character">
+    <img src="image/a.jpg" alt="Aaron Warner">
+    <div class="character-info">
+     <small>THE COMMANDER</small>
+     <h3>آرون وارنر</h3>
+     <p>فرمانده‌ای پیچیده و مرموز که پشت چهره سردش، لایه‌های پنهان زیادی وجود دارد.</p>
+    </div>
+   </article>
+
+   <article class="character">
+    <img src="image/k.jpg" alt="Kenji">
+    <div class="character-info">
+     <small>THE REBEL</small>
+     <h3>کنجی</h3>
+     <p>شخصیتی وفادار، جسور و شوخ‌طبع که در لحظات سخت همراه دوستانش می‌ماند.</p>
+    </div>
+   </article>
+
+   <article class="character">
+    <img src="image/ad.jpg" alt="Adam">
+    <div class="character-info">
+     <small>THE PAST</small>
+     <h3>آدام کنت</h3>
+     <p>یکی از شخصیت‌های مهم گذشته جولیت که تصمیم‌هایش بر مسیر داستان تأثیر می‌گذارند.</p>
+    </div>
+   </article>
+
+   <article class="character">
+    <img src="image/and.jpg" alt="Anderson">
+    <div class="character-info">
+     <small>THE AUTHORITY</small>
+     <h3>آندرسون</h3>
+     <p>یکی از چهره‌های قدرتمند و تهدیدکننده ساختار حکومت بازسازی.</p>
+    </div>
+   </article>
+
+   <article class="character">
+    <img src="image/nazora.jpg" alt="Nazora">
+    <div class="character-info">
+     <small>THE CREATOR</small>
+     <h3>نازورا</h3>
+     <p>دختر فرمانده ارشد آسیا و شاید دوست دار کنجی .</p>
+    </div>
+   </article>
+
+  </div>
+ </div>
+</section>
+
+
+<!-- VIDEOS -->
+
+<section id="videos">
+ <div class="container">
+
+  <div class="section-heading">
+   <div class="eyebrow">VISUAL ARCHIVE</div>
+   <h2>گالری فیلم‌ها</h2>
+   <div class="under-line"></div>
+   <p>لحظاتی از جهان خردم کن</p>
+  </div>
+
+  <div class="video-grid">
+
+   <div class="video-card">
+    <h3>01 — THE STORY</h3>
+
+    <video controls poster="LINK_VIDEO1_POSTER">
+     <source src="vidio/1.mp4" type="video/mp4">
+     مرورگر شما از ویدیو پشتیبانی نمی‌کند.
+    </video>
+
+    <p>ویدیوی اول — معرفی داستان</p>
+   </div>
+
+   <div class="video-card">
+    <h3>02 — JULIETTE & WARNER</h3>
+
+    <video controls poster="LINK_VIDEO2_POSTER">
+     <source src="vidio/2.mp4" type="video/mp4">
+     مرورگر شما از ویدیو پشتیبانی نمی‌کند.
+    </video>
+
+    <p>ویدیوی دوم — گالری تصویری</p>
+   </div>
+
+  </div>
+ </div>
+</section>
+
+
+<!-- BOOKS -->
+
+<section id="books">
+
+ <div class="container">
+
+  <div class="section-heading">
+   <div class="eyebrow">THE BOOK COLLECTION</div>
+   <h2>کتاب‌های مجموعه</h2>
+   <div class="under-line"></div>
+   <p>هر جلد، یک قدم عمیق‌تر به دنیای جولیت</p>
+  </div>
+
+  <div class="book-carousel">
+
+   <div class="book">
+    <div class="book-cover"><img src="image/b1.jpg" alt="Shatter Me"></div>
+    <h3>SHATTER ME</h3><p>خردم کن</p>
+   </div>
+
+   <div class="book">
+    <div class="book-cover"><img src="image/b3.jpg" alt="Unravel Me"></div>
+    <h3>UNRAVEL ME</h3><p>از هم بگسل</p>
+   </div>
+
+   <div class="book">
+    <div class="book-cover"><img src="image/b6.jpg" alt="Ignite Me"></div>
+    <h3>IGNITE ME</h3><p>شعله‌ورم کن</p>
+   </div>
+
+   <div class="book">
+    <div class="book-cover"><img src="image/b4.jpg" alt="Restore Me"></div>
+    <h3>RESTORE ME</h3><p>بازسازی‌ام کن</p>
+   </div>
+
+   <div class="book">
+    <div class="book-cover"><img src="image/b8.jpg" alt="Defy Me"></div>
+    <h3>DEFY ME</h3><p>به چالش بکش</p>
+   </div>
+
+   <div class="book">
+    <div class="book-cover"><img src="image/b5.jpg" alt="Imagine Me"></div>
+    <h3>IMAGINE ME</h3><p>تصورم کن</p>
+   </div>
+
+   <div class="book">
+    <div class="book-cover"><img src="image/b4.jpg" alt="Believe Me"></div>
+    <h3>BELIEVE ME</h3><p>باورم کن</p>
+   </div>
+
+  </div>
+ </div>
+</section>
+
+
+<!-- AUTHOR -->
+
+<section id="author">
+
+ <div class="container">
+
+  <div class="section-heading">
+   <div class="eyebrow">THE MIND BEHIND THE WORLD</div>
+   <h2>نویسنده مجموعه</h2>
+   <div class="under-line"></div>
+  </div>
+
+  <div class="author-grid">
+
+   <img class="author-img" src="LINK_AUTHOR_IMAGE" alt="Tahereh Mafi">
+
+   <div class="author-text">
+    <div class="eyebrow">TAHEREH MAFI</div>
+    <h3>طاهره مافی</h3>
+
+    <p>
+     طاهره مافی نویسنده ایرانی‌تبار آمریکایی و خالق
+     مجموعه محبوب Shatter Me است.
+     او با روایت شاعرانه، شخصیت‌پردازی احساسی
+     و ساخت جهان‌های داستانی متفاوت شناخته می‌شود.
+    </p>
+
+    <p>
+     مجموعه خردم کن با محوریت جولیت فرارس،
+     موضوعاتی مثل هویت، قدرت، آزادی، عشق،
+     مقاومت و پذیرش خود را دنبال می‌کند.
+    </p>
+
+    <div class="author-quote">
+     SOME STORIES CHANGE THE WAY WE SEE THE WORLD.
+    </div>
+
+   </div>
+  </div>
+ </div>
+</section>
+
+
+<!-- MUSIC -->
+
+<section class="music-area" id="music">
+
+ <div class="container">
+
+  <div class="section-heading">
+   <div class="eyebrow">THE SOUND OF THIS WORLD</div>
+   <h2>موسیقی آرشیو</h2>
+   <div class="under-line"></div>
+   <p>چهار قطعه برای ورود به فضای این جهان</p>
+  </div>
+
+  <button class="playlist-open" onclick="togglePlaylist()">
+   ♫ &nbsp; OPEN THE PLAYLIST
+  </button>
+
+  <div class="playlist" id="playlist">
+
+   <div class="playlist-head">
+    <h3>SHATTER ME — SOUNDTRACK</h3>
+    <button class="close-playlist" onclick="togglePlaylist()">CLOSE ×</button>
+   </div>
+
+   <div class="track">
+    <div class="track-num">01</div>
+    <div>
+     <h4>THE BEGINNING</h4>
+     <p>موسیقی اول — فضای مرموز</p>
+     <audio controls><source src="music/1.mp3" type="audio/mpeg"></audio>
+    </div>
+   </div>
+
+   <div class="track">
+    <div class="track-num">02</div>
+    <div>
+     <h4>THE POWER</h4>
+     <p>موسیقی دوم — قدرت و مقاومت</p>
+     <audio controls><source src="music/2.mp3" type="audio/mpeg"></audio>
+    </div>
+   </div>
+
+   <div class="track">
+    <div class="track-num">03</div>
+    <div>
+     <h4>THE DARKNESS</h4>
+     <p>موسیقی سوم — فضای تاریک</p>
+     <audio controls><source src="music/3.mp3" type="audio/mpeg"></audio>
+    </div>
+   </div>
+
+   <div class="track">
+    <div class="track-num">04</div>
+    <div>
+     <h4>AFTER THE FALL</h4>
+     <p>موسیقی چهارم — پایان داستان</p>
+     <audio controls><source src="music/4.mp3" type="audio/mpeg"></audio>
+    </div>
+   </div>
+
+  </div>
+ </div>
+</section>
+
+
+<!-- REGISTER -->
+
+<section id="register">
+
+ <div class="container">
+
+  <div class="section-heading">
+   <div class="eyebrow">JOIN THE ARCHIVE</div>
+   <h2>ورود به آرشیو</h2>
+   <div class="under-line"></div>
+   <p>نام کاربری خودت را انتخاب کن.</p>
+  </div>
+
+  <div class="register-box">
+   <p>به دنیای خوانندگان Shatter Me خوش آمدی.</p>
+
+   <form onsubmit="registerDemo(event)">
+    <input type="text" id="username" placeholder="نام کاربری" required>
+    <input type="password" id="password" placeholder="رمز عبور" required>
+    <button type="submit">ENTER THE ARCHIVE</button>
+   </form>
+
+   <p style="margin-top:15px">
+    این فرم نمایشی است و اطلاعات را در سرور ذخیره نمی‌کند.
+   </p>
+
+   <div id="registerMessage" style="color:#9ce17d;font-size:12px"></div>
+  </div>
+
+ </div>
+</section>
+
+
+<!-- BLOG POSTS -->
+
+<section id="blog">
+
+ <div class="container">
+  <div class="section-heading">
+   <div class="eyebrow">LATEST ENTRIES</div>
+   <h2>آخرین نوشته‌ها</h2>
+   <div class="under-line"></div>
+  </div>
+
+  <!-- این قسمت برای نوشته‌های دستی است -->
+  <div class="blog-post">
+   <h3>درباره دنیای خردم کن</h3>
+   <p>اینجا می‌توانی نوشته‌ها، تحلیل شخصیت‌ها و معرفی کتاب‌ها را قرار بدهی.</p>
+  </div>
+
+ </div>
+</section>
+
+
+<footer>
+ <div class="footer-logo">SHATTER ME</div>
+ <p>AFTER THE FALL — THE WORLD IS YOURS TO DISCOVER</p>
+ <p>یک آرشیو طرفداری از مجموعه خردم کن</p>
+ <a class="backtop" href="#home">BACK TO THE TOP ↑</a>
+</footer>
+
+</div>
+
+
+<script>
+/* ENTER WORLD */
+function enterWorld(){
+ const intro=document.getElementById('intro');
+ const site=document.getElementById('site');
+
+ intro.classList.add('hide');
+
+ setTimeout(function(){
+  site.classList.add('show');
+  window.scrollTo({top:0,behavior:'instant'});
+ },900);
+}
+
+/* PLAYLIST */
+function togglePlaylist(){
+ const playlist=document.getElementById('playlist');
+ const audios=playlist.querySelectorAll('audio');
+
+ if(playlist.classList.contains('open')){
+  playlist.classList.remove('open');
+  audios.forEach(a=>a.pause());
+ }else{
+  playlist.classList.add('open');
+ }
+}
+
+/* DEMO REGISTER */
+function registerDemo(event){
+ event.preventDefault();
+ const username=document.getElementById('username').value;
+ document.getElementById('registerMessage').textContent=
+ 'خوش آمدی '+username+'! این فرم در حال حاضر نمایشی است.';
+}
+
+/* CURSOR */
+const cursor=document.getElementById('cursor');
+const halo=document.getElementById('cursorHalo');
+
+let mouseX=0,mouseY=0;
+let haloX=0,haloY=0;
+let trailTimer=0;
+
+document.addEventListener('mousemove',function(e){
+ mouseX=e.clientX;
+ mouseY=e.clientY;
+
+ cursor.style.left=mouseX+'px';
+ cursor.style.top=mouseY+'px';
+
+ if(Date.now()-trailTimer>35){
+  trailTimer=Date.now();
+  const dot=document.createElement('div');
+  dot.className='trail';
+  dot.style.left=mouseX+'px';
+  dot.style.top=mouseY+'px';
+  document.body.appendChild(dot);
+
+  setTimeout(()=>dot.remove(),550);
+ }
+});
+
+function animateHalo(){
+ haloX+=(mouseX-haloX)*.14;
+ haloY+=(mouseY-haloY)*.14;
+ halo.style.left=haloX+'px';
+ halo.style.top=haloY+'px';
+ requestAnimationFrame(animateHalo);
+}
+animateHalo();
+
+/* PAUSE OTHER SONGS WHEN ONE STARTS */
+document.querySelectorAll('audio').forEach(function(audio){
+ audio.addEventListener('play',function(){
+  document.querySelectorAll('audio').forEach(function(other){
+   if(other!==audio) other.pause();
+  });
+ });
+});
+
+/* CLOSE INTRO AUDIO AFTER LEAVING */
+document.querySelector('.enter').addEventListener('click',function(){
+ document.querySelectorAll('#intro audio').forEach(a=>a.pause());
+});
+</script>
+
+</body>
+</html>
